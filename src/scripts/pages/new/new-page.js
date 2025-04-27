@@ -258,7 +258,7 @@ export default class NewPage {
     this.clearForm();
 
     // Redirect page
-    location.href = '/';
+    location.hash = '/';
   }
 
   storeFailed(message) {

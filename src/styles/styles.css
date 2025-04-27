@@ -32,6 +32,7 @@
   animation-duration: 900ms;
   animation-timing-function: ease-out;
 }
+
 ::view-transition-new(root) {
   animation-name: full-slide-from-right;
   animation-duration: 900ms;
@@ -498,7 +499,6 @@ header {
 
 .report-item__description {
   display: -webkit-box;
-  line-clamp: 4;
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
