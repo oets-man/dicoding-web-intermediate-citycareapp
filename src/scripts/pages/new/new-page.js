@@ -215,7 +215,9 @@ export default class NewPage {
 
     this.#camera.addCheeseButtonListener('#camera-take-button', async () => {
       const image = await this.#camera.takePicture();
-      alert(URL.createObjectURL(image));
+      //   alert(URL.createObjectURL(image));
+      await this.#addTakenPicture(image);
+      await this.#populateTakenPictures();
     });
   }
 

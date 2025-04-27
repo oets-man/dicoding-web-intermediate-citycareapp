@@ -121,6 +121,7 @@ export default class Camera {
     context.fillStyle = '#AAAAAA';
     context.fillRect(0, 0, this.#canvasElement.width, this.#canvasElement.height);
   }
+
   async takePicture() {
     if (!(this.#width && this.#height)) {
       return null;
