@@ -500,7 +500,9 @@ header {
 .report-item__description {
   display: -webkit-box;
   -webkit-line-clamp: 4;
+  line-clamp: 4; /* Add this line */
   -webkit-box-orient: vertical;
+  box-orient: vertical; /* Also add this line for compatibility */
   overflow: hidden;
 }
 
