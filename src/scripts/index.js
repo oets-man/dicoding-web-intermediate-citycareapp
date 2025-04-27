@@ -2,6 +2,7 @@
 import '../styles/styles.css';
 import '../styles/responsives.css';
 import 'tiny-slider/dist/tiny-slider.css';
+import Camera from './utils/camera';
 
 // Components
 import App from './pages/app';
@@ -17,5 +18,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   window.addEventListener('hashchange', async () => {
     await app.renderPage();
+
+    // Stop all active media
+    Camera.stopAllStreams();
   });
 });
