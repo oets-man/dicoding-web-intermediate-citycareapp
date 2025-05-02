@@ -3,6 +3,7 @@ import { convertBase64ToBlob } from '../../utils';
 import * as CityCareAPI from '../../data/api';
 import { generateLoaderAbsoluteTemplate } from '../../templates';
 import Camera from '../../utils/camera';
+import Map from '../../utils/map';
 
 export default class NewPage {
   #presenter;
@@ -10,6 +11,7 @@ export default class NewPage {
   #camera;
   #isCameraOpen = false;
   #takenDocumentations = [];
+  #map = null;
 
   async render() {
     return `
@@ -213,7 +215,10 @@ export default class NewPage {
   }
 
   async initialMap() {
-    // TODO: map initialization
+    this.#map = await Map.build('#map', {
+      zoom: 15,
+      locate: true,
+    });
   }
 
   #setupCamera() {
