@@ -33,7 +33,7 @@ export default class ReportDetailPresenter {
         return;
       }
       const report = await reportMapper(response.data);
-      console.log(report); // for debugging purpose, remove after checking it
+      // console.log(report); // for debugging purpose, remove after checking it
       this.#view.populateReportDetailAndInitialMap(response.message, report);
     } catch (error) {
       console.error('showReportDetailAndMap: error:', error);

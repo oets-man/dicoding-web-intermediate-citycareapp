@@ -1,3 +1,5 @@
+import { reportMapper } from '../../data/api-mapper';
+
 export default class HomePresenter {
   #view;
   #model;
@@ -31,7 +33,9 @@ export default class HomePresenter {
         return;
       }
 
-      this.#view.populateReportsList(response.message, response.data);
+      const mapper = await Promise.all(response.data.map(reportMapper));
+      // console.log(mapper);
+      this.#view.populateReportsList(response.message, mapper);
     } catch (error) {
       console.error('initialGalleryAndMap: error:', error);
       this.#view.populateReportsListError(error.message);
