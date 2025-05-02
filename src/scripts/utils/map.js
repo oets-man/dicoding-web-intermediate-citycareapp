@@ -1,4 +1,7 @@
-import { map, tileLayer } from 'leaflet';
+import { map, tileLayer, Icon, icon, marker, popup } from 'leaflet';
+import markerIcon from 'leaflet/dist/images/marker-icon.png';
+import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
+import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 
 export default class Map {
   #zoom = 5;
@@ -70,5 +73,36 @@ export default class Map {
       layers: [tileOsm],
       ...options,
     });
+  }
+
+  createIcon(options = {}) {
+    return icon({
+      ...Icon.Default.prototype.options,
+      iconRetinaUrl: markerIcon2x,
+      iconUrl: markerIcon,
+      shadowUrl: markerShadow,
+      ...options,
+    });
+  }
+  addMarker(coordinates, markerOptions = {}, popupOptions = null) {
+    if (typeof markerOptions !== 'object') {
+      throw new Error('markerOptions must be an object');
+    }
+    const newMarker = marker(coordinates, {
+      icon: this.createIcon(),
+      ...markerOptions,
+    });
+    if (popupOptions) {
+      if (typeof popupOptions !== 'object') {
+        throw new Error('popupOptions must be an object');
+      }
+      if (!('content' in popupOptions)) {
+        throw new Error('popupOptions must include `content` property.');
+      }
+      const newPopup = popup(coordinates, popupOptions);
+      newMarker.bindPopup(newPopup);
+    }
+    newMarker.addTo(this.#map);
+    return newMarker;
   }
 }

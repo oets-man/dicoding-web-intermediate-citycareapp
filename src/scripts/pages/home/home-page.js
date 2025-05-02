@@ -48,6 +48,12 @@ export default class HomePage {
     }
 
     const html = reports.reduce((accumulator, report) => {
+      if (this.#map) {
+        const coordinate = [report.location.latitude, report.location.longitude];
+        const markerOptions = { alt: report.title };
+        const popupOptions = { content: report.title };
+        this.#map.addMarker(coordinate, markerOptions, popupOptions);
+      }
       return accumulator.concat(
         generateReportItemTemplate({
           ...report,
