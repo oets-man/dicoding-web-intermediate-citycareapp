@@ -5,10 +5,12 @@ import {
   generateReportsListErrorTemplate,
 } from '../../templates';
 import HomePresenter from './home-presenter';
+import Map from '../../utils/map';
 import * as CityCareAPI from '../../data/api';
 
 export default class HomePage {
   #presenter = null;
+  #map = null;
 
   async render() {
     return `
@@ -68,7 +70,10 @@ export default class HomePage {
   }
 
   async initialMap() {
-    // TODO: map initialization
+    this.#map = await Map.build('#map', {
+      zoom: 10,
+      locate: true,
+    });
   }
 
   showMapLoading() {
