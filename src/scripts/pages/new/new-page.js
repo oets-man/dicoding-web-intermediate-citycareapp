@@ -222,6 +222,10 @@ export default class NewPage {
 
     // Preparing marker for select coordinate
     const centerCoordinate = this.#map.getCenter();
+
+    // Menyesuaikan Nilai Koordinat Awal
+    this.#updateLatLngInput(centerCoordinate.latitude, centerCoordinate.longitude);
+
     const draggableMarker = this.#map.addMarker(
       [centerCoordinate.latitude, centerCoordinate.longitude],
       { draggable: 'true' },
