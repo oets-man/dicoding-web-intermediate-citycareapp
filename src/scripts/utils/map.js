@@ -1,4 +1,4 @@
-import { map, tileLayer, Icon, icon, marker, popup } from 'leaflet';
+import { map, tileLayer, Icon, icon, marker, popup, latLng } from 'leaflet';
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
 import markerShadow from 'leaflet/dist/images/marker-shadow.png';
@@ -73,6 +73,14 @@ export default class Map {
       layers: [tileOsm],
       ...options,
     });
+  }
+
+  changeCamera(coordinate, zoomLevel = null) {
+    if (!zoomLevel) {
+      this.#map.setView(latLng(coordinate), this.#zoom);
+      return;
+    }
+    this.#map.setView(latLng(coordinate), zoomLevel);
   }
 
   createIcon(options = {}) {
