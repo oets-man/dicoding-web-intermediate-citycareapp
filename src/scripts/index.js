@@ -2,10 +2,10 @@
 import '../styles/styles.css';
 import '../styles/responsives.css';
 import 'tiny-slider/dist/tiny-slider.css';
-import Camera from './utils/camera';
 
 // Components
 import App from './pages/app';
+import Camera from './utils/camera';
 
 document.addEventListener('DOMContentLoaded', async () => {
   const app = new App({
