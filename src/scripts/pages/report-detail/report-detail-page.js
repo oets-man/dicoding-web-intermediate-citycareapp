@@ -68,6 +68,7 @@ export default class ReportDetailPage {
       description: report.description,
       damageLevel: report.damageLevel,
       evidenceImages: report.evidenceImages,
+      location: report.location,
       latitudeLocation: report.location.latitude,
       longitudeLocation: report.location.longitude,
       reporterName: report.reporter.name,
