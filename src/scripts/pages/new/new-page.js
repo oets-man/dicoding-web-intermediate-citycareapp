@@ -219,6 +219,29 @@ export default class NewPage {
       zoom: 15,
       locate: true,
     });
+
+    // Preparing marker for select coordinate
+    const centerCoordinate = this.#map.getCenter();
+    const draggableMarker = this.#map.addMarker(
+      [centerCoordinate.latitude, centerCoordinate.longitude],
+      { draggable: 'true' },
+    );
+    draggableMarker.addEventListener('move', (event) => {
+      const coordinate = event.target.getLatLng();
+      this.#updateLatLngInput(coordinate.lat, coordinate.lng);
+    });
+
+    this.#map.addMapEventListener('click', (event) => {
+      draggableMarker.setLatLng(event.latlng);
+
+      // Keep center with user view
+      event.sourceTarget.flyTo(event.latlng);
+    });
+  }
+
+  #updateLatLngInput(latitude, longitude) {
+    this.#form.elements.namedItem('latitude').value = latitude;
+    this.#form.elements.namedItem('longitude').value = longitude;
   }
 
   #setupCamera() {
