@@ -33,9 +33,9 @@ export default class HomePresenter {
         return;
       }
 
-      const mapper = await Promise.all(response.data.map(reportMapper));
-      // console.log(mapper);
-      this.#view.populateReportsList(response.message, mapper);
+      const reports = await Promise.all(response.data.map(reportMapper));
+
+      this.#view.populateReportsList(response.message, reports);
     } catch (error) {
       console.error('initialGalleryAndMap: error:', error);
       this.#view.populateReportsListError(error.message);

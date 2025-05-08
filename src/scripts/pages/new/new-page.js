@@ -6,9 +6,9 @@ import Camera from '../../utils/camera';
 import Map from '../../utils/map';
 
 export default class NewPage {
-  #presenter;
-  #form;
-  #camera;
+  #presenter = null;
+  #form = null;
+  #camera = null;
   #isCameraOpen = false;
   #takenDocumentations = [];
   #map = null;
@@ -26,13 +26,13 @@ export default class NewPage {
           </div>
         </div>
       </section>
-  
+    
       <section class="container">
         <div class="new-form__container">
           <form id="new-form" class="new-form">
             <div class="form-control">
               <label for="title-input" class="new-form__title__title">Judul Laporan</label>
-  
+    
               <div class="new-form__title__container">
                 <input
                   id="title-input"
@@ -45,7 +45,7 @@ export default class NewPage {
             </div>
             <div class="form-control">
               <div class="new-form__damage-level__title">Tingkat Kerusakan</div>
-  
+    
               <div class="new-form__damage-level__container">
                 <div class="new-form__damage-level__minor__container">
                   <input id="damage-level-minor-input" type="radio" name="damageLevel" value="minor">
@@ -78,7 +78,7 @@ export default class NewPage {
             </div>
             <div class="form-control">
               <label for="description-input" class="new-form__description__title">Keterangan</label>
-  
+    
               <div class="new-form__description__container">
                 <textarea
                   id="description-input"
@@ -90,7 +90,7 @@ export default class NewPage {
             <div class="form-control">
               <label for="documentations-input" class="new-form__documentations__title">Dokumentasi</label>
               <div id="documentations-more-info">Anda dapat menyertakan foto sebagai dokumentasi.</div>
-  
+    
               <div class="new-form__documentations__container">
                 <div class="new-form__documentations__buttons">
                   <button id="documentations-input-button" class="btn btn-outline" type="button">
@@ -115,7 +115,7 @@ export default class NewPage {
                     Video stream not available.
                   </video>
                   <canvas id="camera-canvas" class="new-form__camera__canvas"></canvas>
-  
+    
                   <div class="new-form__camera__tools">
                     <select id="camera-select"></select>
                     <div class="new-form__camera__tools_buttons">
@@ -130,7 +130,7 @@ export default class NewPage {
             </div>
             <div class="form-control">
               <div class="new-form__location__title">Lokasi</div>
-  
+    
               <div class="new-form__location__container">
                 <div class="new-form__location__map__container">
                   <div id="map" class="new-form__location__map"></div>
@@ -204,7 +204,7 @@ export default class NewPage {
         if (this.#isCameraOpen) {
           event.currentTarget.textContent = 'Tutup Kamera';
           this.#setupCamera();
-          await this.#camera.launch();
+          this.#camera.launch();
 
           return;
         }
@@ -223,13 +223,13 @@ export default class NewPage {
     // Preparing marker for select coordinate
     const centerCoordinate = this.#map.getCenter();
 
-    // Menyesuaikan Nilai Koordinat Awal
     this.#updateLatLngInput(centerCoordinate.latitude, centerCoordinate.longitude);
 
     const draggableMarker = this.#map.addMarker(
       [centerCoordinate.latitude, centerCoordinate.longitude],
       { draggable: 'true' },
     );
+
     draggableMarker.addEventListener('move', (event) => {
       const coordinate = event.target.getLatLng();
       this.#updateLatLngInput(coordinate.lat, coordinate.lng);
@@ -238,7 +238,7 @@ export default class NewPage {
     this.#map.addMapEventListener('click', (event) => {
       draggableMarker.setLatLng(event.latlng);
 
-      // Keep center with user view
+      // Keep center
       event.sourceTarget.flyTo(event.latlng);
     });
   }

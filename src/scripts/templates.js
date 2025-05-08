@@ -87,12 +87,8 @@ export function generateReportItemTemplate({
   evidenceImages,
   reporterName,
   createdAt,
-  location,
+  placeNameLocation,
 }) {
-  const loc = location.placeName
-    ? location.placeName
-    : location.latitude + ', ' + location.longitude;
-  // console.log(loc);
   return `
     <div tabindex="0" class="report-item" data-reportid="${id}">
       <img class="report-item__image" src="${evidenceImages[0]}" alt="${title}">
@@ -104,7 +100,7 @@ export function generateReportItemTemplate({
               <i class="fas fa-calendar-alt"></i> ${showFormattedDate(createdAt, 'id-ID')}
             </div>
             <div class="report-item__location">
-              <i class="fas fa-map"></i> ${loc}
+              <i class="fas fa-map"></i> ${placeNameLocation}
             </div>
           </div>
         </div>
@@ -193,8 +189,6 @@ export function generateReportDetailTemplate({
   description,
   damageLevel,
   evidenceImages,
-  latitudeLocation,
-  longitudeLocation,
   location,
   reporterName,
   createdAt,
