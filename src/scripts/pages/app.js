@@ -4,11 +4,12 @@ import {
   generateMainNavigationListTemplate,
   generateSubscribeButtonTemplate,
   generateUnauthenticatedNavigationListTemplate,
+  generateUnsubscribeButtonTemplate,
 } from '../templates';
 import { isServiceWorkerAvailable, setupSkipToContent, transitionHelper } from '../utils';
 import { getAccessToken, getLogout } from '../utils/auth';
 import { routes } from '../routes/routes';
-import { subscribe } from '../utils/notification-helper';
+import { isCurrentPushSubscriptionAvailable, subscribe } from '../utils/notification-helper';
 
 export default class App {
   #content;
@@ -81,9 +82,17 @@ export default class App {
 
   async #setupPushNotification() {
     const pushNotificationTools = document.getElementById('push-notification-tools');
+    const isSubscribed = await isCurrentPushSubscriptionAvailable();
+    if (isSubscribed) {
+      pushNotificationTools.innerHTML = generateUnsubscribeButtonTemplate();
+      return;
+    }
+
     pushNotificationTools.innerHTML = generateSubscribeButtonTemplate();
     document.getElementById('subscribe-button').addEventListener('click', () => {
-      subscribe();
+      subscribe().finally(() => {
+        this.#setupPushNotification();
+      });
     });
   }
 
