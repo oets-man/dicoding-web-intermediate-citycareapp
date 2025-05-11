@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      idb:
+        specifier: ^8.0.3
+        version: 8.0.3
       leaflet:
         specifier: ^1.9.4
         version: 1.9.4
@@ -1617,6 +1620,9 @@ packages:
 
   idb@7.1.1:
     resolution: {integrity: sha512-gchesWBzyvGHRO9W8tzUWFDycow5gwjvFKfyV9FF32Y7F50yZMp7mP+T2mJIWFx49zicqyC4uefHM17o6xKIVQ==}
+
+  idb@8.0.3:
+    resolution: {integrity: sha512-LtwtVyVYO5BqRvcsKuB2iUMnHwPVByPCXFXOpuU96IZPPoPN6xjOGxZQ74pgSVVLQWtUOYgyeL4GE98BY5D3wg==}
 
   ignore@7.0.3:
     resolution: {integrity: sha512-bAH5jbK/F3T3Jls4I0SO1hmPR0dKU0a7+SY6n1yzRtG54FLO8d6w/nxLFX2Nb7dBu6cCWXPaAME6cYqFUMmuCA==}
@@ -4770,6 +4776,8 @@ snapshots:
       postcss: 8.5.3
 
   idb@7.1.1: {}
+
+  idb@8.0.3: {}
 
   ignore@7.0.3: {}
 
