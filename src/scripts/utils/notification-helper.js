@@ -36,7 +36,7 @@ export async function requestNotificationPermission() {
 }
 
 export async function getPushSubscription() {
-  const registration = await navigator.serviceWorker.getRegistration();
+  const registration = await navigator.serviceWorker.ready;
   return await registration.pushManager.getSubscription();
 }
 
@@ -65,19 +65,23 @@ export async function subscribe() {
 
   const failureSubscribeMessage = 'Langganan push notification gagal diaktifkan.';
   const successSubscribeMessage = 'Langganan push notification berhasil diaktifkan.';
+
   let pushSubscription;
 
   try {
-    const registration = await navigator.serviceWorker.getRegistration();
+    const registration = await navigator.serviceWorker.ready;
     pushSubscription = await registration.pushManager.subscribe(generateSubscribeOptions());
+
     const { endpoint, keys } = pushSubscription.toJSON();
-    console.log({ endpoint, keys });
     const response = await subscribePushNotification({ endpoint, keys });
+
     if (!response.ok) {
       console.error('subscribe: response:', response);
       alert(failureSubscribeMessage);
+
       // Undo subscribe to push notification
       await pushSubscription.unsubscribe();
+
       return;
     }
 
@@ -94,25 +98,34 @@ export async function subscribe() {
 export async function unsubscribe() {
   const failureUnsubscribeMessage = 'Langganan push notification gagal dinonaktifkan.';
   const successUnsubscribeMessage = 'Langganan push notification berhasil dinonaktifkan.';
+
   try {
     const pushSubscription = await getPushSubscription();
+
     if (!pushSubscription) {
       alert('Tidak bisa memutus langganan push notification karena belum berlangganan sebelumnya.');
       return;
     }
+
     const { endpoint, keys } = pushSubscription.toJSON();
     const response = await unsubscribePushNotification({ endpoint });
+
     if (!response.ok) {
       alert(failureUnsubscribeMessage);
       console.error('unsubscribe: response:', response);
+
       return;
     }
+
     const unsubscribed = await pushSubscription.unsubscribe();
+
     if (!unsubscribed) {
       alert(failureUnsubscribeMessage);
       await subscribePushNotification({ endpoint, keys });
+
       return;
     }
+
     alert(successUnsubscribeMessage);
   } catch (error) {
     alert(failureUnsubscribeMessage);

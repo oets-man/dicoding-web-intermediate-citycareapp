@@ -28,15 +28,16 @@ export default class ReportDetailPresenter {
       const response = await this.#apiModel.getReportById(this.#reportId);
 
       if (!response.ok) {
-        console.error('showReportDetailAndMap: response:', response);
+        console.error('showReportDetail: response:', response);
         this.#view.populateReportDetailError(response.message);
         return;
       }
+
       const report = await reportMapper(response.data);
-      // console.log(report); // for debugging purpose, remove after checking it
+
       this.#view.populateReportDetailAndInitialMap(response.message, report);
     } catch (error) {
-      console.error('showReportDetailAndMap: error:', error);
+      console.error('showReportDetail: error:', error);
       this.#view.populateReportDetailError(error.message);
     } finally {
       this.#view.hideReportDetailLoading();
@@ -85,10 +86,12 @@ export default class ReportDetailPresenter {
         this.#reportId,
         commentId,
       );
+
       if (!response.ok) {
         console.error('notifyReportOwner: response:', response);
         return;
       }
+
       console.log('notifyReportOwner:', response.message);
     } catch (error) {
       console.error('notifyReportOwner: error:', error);
@@ -98,10 +101,12 @@ export default class ReportDetailPresenter {
   async notifyMe() {
     try {
       const response = await this.#apiModel.sendReportToMeViaNotification(this.#reportId);
+
       if (!response.ok) {
         console.error('notifyMe: response:', response);
         return;
       }
+
       console.log('notifyMe:', response.message);
     } catch (error) {
       console.error('notifyMe: error:', error);

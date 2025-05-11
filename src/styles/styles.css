@@ -500,9 +500,8 @@ header {
 .report-item__description {
   display: -webkit-box;
   -webkit-line-clamp: 4;
-  line-clamp: 4; /* Add this line */
+  line-clamp: 4;
   -webkit-box-orient: vertical;
-  box-orient: vertical; /* Also add this line for compatibility */
   overflow: hidden;
 }
 
@@ -834,10 +833,6 @@ header {
   display: flex;
   flex-direction: column;
   gap: 10px;
-}
-
-.new-form__documentations__input {
-  display: none;
 }
 
 .new-form__camera__container {

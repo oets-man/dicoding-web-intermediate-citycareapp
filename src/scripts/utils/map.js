@@ -14,8 +14,10 @@ export default class Map {
       url.searchParams.set('key', MAP_SERVICE_API_KEY);
       url.searchParams.set('language', 'id');
       url.searchParams.set('limit', '1');
+
       const response = await fetch(url);
       const json = await response.json();
+
       const place = json.features[0].place_name.split(', ');
       return [place.at(-2), place.at(-1)].map((name) => name).join(', ');
     } catch (error) {
@@ -97,6 +99,7 @@ export default class Map {
       this.#map.setView(latLng(coordinate), this.#zoom);
       return;
     }
+
     this.#map.setView(latLng(coordinate), zoomLevel);
   }
 
@@ -117,25 +120,33 @@ export default class Map {
       ...options,
     });
   }
+
   addMarker(coordinates, markerOptions = {}, popupOptions = null) {
     if (typeof markerOptions !== 'object') {
       throw new Error('markerOptions must be an object');
     }
+
     const newMarker = marker(coordinates, {
       icon: this.createIcon(),
+      alt: 'Marker',
       ...markerOptions,
     });
+
     if (popupOptions) {
       if (typeof popupOptions !== 'object') {
         throw new Error('popupOptions must be an object');
       }
-      if (!('content' in popupOptions)) {
-        throw new Error('popupOptions must include `content` property.');
-      }
-      const newPopup = popup(coordinates, popupOptions);
+
+      const newPopup = popup(popupOptions);
+      newPopup.setLatLng(coordinates);
+      newPopup.setContent((layer) => {
+        return layer.options.alt;
+      });
       newMarker.bindPopup(newPopup);
     }
+
     newMarker.addTo(this.#map);
+
     return newMarker;
   }
 
